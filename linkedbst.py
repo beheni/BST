@@ -14,6 +14,7 @@ from time import time
 
 setrecursionlimit(10**6)
 
+
 class LinkedBST(AbstractCollection):
     """An link-based binary search tree implementation."""
 
@@ -59,14 +60,19 @@ class LinkedBST(AbstractCollection):
     def inorder(self):
         """Supports an inorder traversal on a view of self."""
         lyst = list()
+        nodes = LinkedStack()
 
-        def recurse(node):
-            if node != None:
-                recurse(node.left)
+        node = self._root
+        while not nodes.isEmpty() or node is not None:
+            if node is not None:
+                nodes.push(node)
+                node = node.left
+            else:
+                node = nodes.pop()
                 lyst.append(node.data)
-                recurse(node.right)
+                # print(len(lyst))
+                node = node.right
 
-        recurse(self._root)
         return list(iter(lyst))
 
     def find_object(self, item):
@@ -390,4 +396,7 @@ class LinkedBST(AbstractCollection):
         print("Time searching in rebalance balanced binary tree:", (tm8-tm7))
 
 
-LinkedBST.demo_bst("test.txt")
+# LinkedBST.demo_bst("test.txt")
+t = LinkedBST([i for i in "jkslg"])
+print(t)
+print(t.inorder())
