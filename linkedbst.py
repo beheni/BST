@@ -143,33 +143,6 @@ class LinkedBST(AbstractCollection):
         self._root = None
         self._size = 0
 
-    def add(self, item):
-        """Adds item to the tree."""
-
-        # Helper function to search for item's position
-        def recurse(node):
-            # New item is less, go left until spot is found
-            if item < node.data:
-                if node.left == None:
-                    node.left = BSTNode(item)
-                else:
-                    recurse(node.left)
-            # New item is greater or equal,
-            # go right until spot is found
-            elif node.right == None:
-                node.right = BSTNode(item)
-            else:
-                recurse(node.right)
-                # End of recurse
-
-        # Tree is empty, so new item goes at the root
-        if self.isEmpty():
-            self._root = BSTNode(item)
-        # Otherwise, search for the item's spot
-        else:
-            recurse(self._root)
-        self._size += 1
-
     def remove(self, item):
         """Precondition: item is in self.
         Raises: KeyError if item is not in self.
@@ -360,6 +333,64 @@ class LinkedBST(AbstractCollection):
                 return elem
         return None
 
+    def add_iter(self, item):
+        #  Create a new node
+        node = BSTNode(item)
+        if (self._root == None) :
+            #  When adds a first node in bst
+            self._root = node
+        else :
+            find = self._root
+            #  Add new node to proper position
+            while (find != None) :
+                if (find.data >= item) :
+                    if (find.left == None) :
+                        #  When left child empty
+                        #  So add new node here
+                        find.left = node
+                        return
+                    else :
+                        #  Otherwise
+                        #  Visit left sub-tree
+                        find = find.left
+                    
+                else :
+                    if (find.right == None) :
+                        #  When right child empty
+                        #  So add new node here
+                        find.right = node
+                        return
+                    else :
+                        #  Visit right sub-tree
+                        find = find.right
+
+    def add_recursive(self, item):
+        """Adds item to the tree."""
+
+        # Helper function to search for item's position
+        def recurse(node):
+            # New item is less, go left until spot is found
+            if item < node.data:
+                if node.left == None:
+                    node.left = BSTNode(item)
+                else:
+                    recurse(node.left)
+            # New item is greater or equal,
+            # go right until spot is found
+            elif node.right == None:
+                node.right = BSTNode(item)
+            else:
+                recurse(node.right)
+                # End of recurse
+
+        # Tree is empty, so new item goes at the root
+        if self.isEmpty():
+            self._root = BSTNode(item)
+        # Otherwise, search for the item's spot
+        else:
+            recurse(self._root)
+        self._size += 1
+
     @staticmethod
     def demo_bst(path):
         """
@@ -407,7 +438,7 @@ class LinkedBST(AbstractCollection):
         print("Time searching in rebalance balanced binary tree:", (tm8-tm7))
 
 
-LinkedBST.demo_bst("test.txt")
-# t = LinkedBST([i for i in "jkslg"])
+LinkedBST.demo_bst("words.txt")
+t = LinkedBST([i for i in "jkslg"])
 # print(t)
 # print(t.inorder())
