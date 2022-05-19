@@ -4,7 +4,6 @@ Author: Ken Lambert
 """
 import tqdm
 from sys import setrecursionlimit
-from numpy import random
 from abstractcollection import AbstractCollection
 from bstnode import BSTNode
 from linkedstack import LinkedStack
@@ -126,7 +125,19 @@ class LinkedBST(AbstractCollection):
 
         return recurse(self._root)
 
+    def find_iterative(self, item):
+        root = self._root
+        while root != None:
+            if item > root.data:
+                root = root.right
+            elif item < root.data:
+                root = root.left
+            else:
+                return root.data
+        return False
+
     # Mutator methods
+
     def clear(self):
         """Makes self become empty."""
         self._root = None
@@ -374,7 +385,7 @@ class LinkedBST(AbstractCollection):
         tm3 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
-            tree_not_random_add.find(random_item)
+            tree_not_random_add.find_iterative(random_item)
         tm4 = time()
         print("Time searching in not balanced binary tree with sequentially added nodes:", (tm4-tm3))
 
@@ -383,7 +394,7 @@ class LinkedBST(AbstractCollection):
         tm5 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
-            tree_random_add.find(random_item)
+            tree_random_add.find_iterative(random_item)
         tm6 = time()
         print("Time searching in not balanced binary tree with randomly added nodes:", (tm6-tm5))
 
@@ -391,12 +402,12 @@ class LinkedBST(AbstractCollection):
         tm7 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
-            tree_random_add.find(random_item)
+            tree_random_add.find_iterative(random_item)
         tm8 = time()
         print("Time searching in rebalance balanced binary tree:", (tm8-tm7))
 
 
-# LinkedBST.demo_bst("test.txt")
-t = LinkedBST([i for i in "jkslg"])
-print(t)
-print(t.inorder())
+LinkedBST.demo_bst("test.txt")
+# t = LinkedBST([i for i in "jkslg"])
+# print(t)
+# print(t.inorder())
