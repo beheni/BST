@@ -336,31 +336,31 @@ class LinkedBST(AbstractCollection):
     def add_iter(self, item):
         #  Create a new node
         node = BSTNode(item)
-        if (self._root == None) :
+        if (self._root == None):
             #  When adds a first node in bst
             self._root = node
-        else :
+        else:
             find = self._root
             #  Add new node to proper position
-            while (find != None) :
-                if (find.data >= item) :
-                    if (find.left == None) :
+            while (find != None):
+                if (find.data >= item):
+                    if (find.left == None):
                         #  When left child empty
                         #  So add new node here
                         find.left = node
                         return
-                    else :
+                    else:
                         #  Otherwise
                         #  Visit left sub-tree
                         find = find.left
-                    
-                else :
-                    if (find.right == None) :
+
+                else:
+                    if (find.right == None):
                         #  When right child empty
                         #  So add new node here
                         find.right = node
                         return
-                    else :
+                    else:
                         #  Visit right sub-tree
                         find = find.right
 
@@ -405,40 +405,50 @@ class LinkedBST(AbstractCollection):
             lst_words = []
             for word in file:
                 lst_words.append(word.strip())
+        print("Time searching in list:")
+        
         tm1 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
             lst_words.index(random_item)
         tm2 = time()
-        print("Time searching in list:", tm2-tm1)
-
+        print(tm2-tm1)
+        print("")
+        
         tree_not_random_add = LinkedBST(lst_words)
+        print("Time searching in not balanced binary tree with sequentially added nodes:")
         tm3 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
             tree_not_random_add.find_iterative(random_item)
         tm4 = time()
-        print("Time searching in not balanced binary tree with sequentially added nodes:", (tm4-tm3))
+        print(tm4-tm3)
+        print("")
 
         shuffle(lst_words)
         tree_random_add = LinkedBST(lst_words)
+        print("Time searching in not balanced binary tree with randomly added nodes:")
         tm5 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
             tree_random_add.find_iterative(random_item)
         tm6 = time()
-        print("Time searching in not balanced binary tree with randomly added nodes:", (tm6-tm5))
+        print(tm6-tm5)
+        print("")
 
         tree_random_add.rebalance()
+        print("Time searching in rebalance balanced binary tree:")
         tm7 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
             tree_random_add.find_iterative(random_item)
         tm8 = time()
-        print("Time searching in rebalance balanced binary tree:", (tm8-tm7))
+        print(tm8-tm7)
+        print("")
 
 
-LinkedBST.demo_bst("words.txt")
-t = LinkedBST([i for i in "jkslg"])
+LinkedBST.demo_bst("test.txt")
+# t = LinkedBST([i for i in "jkslg"])
+
 # print(t)
 # print(t.inorder())
