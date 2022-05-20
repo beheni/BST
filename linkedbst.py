@@ -284,10 +284,6 @@ class LinkedBST(AbstractCollection):
         :return:
         '''
         traverse = self.inorder()
-        # if low in traverse and high in traverse:
-        #     return traverse[traverse.index(low):traverse.index(high)+1:]
-        # else:
-        #     return None
         return [i for i in traverse if i >= low and i <= high]
 
     def rebalance(self):
@@ -363,6 +359,7 @@ class LinkedBST(AbstractCollection):
                     else:
                         #  Visit right sub-tree
                         find = find.right
+        self._size += 1
 
     def add_recursive(self, item):
         """Adds item to the tree."""
@@ -405,8 +402,8 @@ class LinkedBST(AbstractCollection):
             lst_words = []
             for word in file:
                 lst_words.append(word.strip())
-        print("Time searching in list:")
-        
+        print("Time searching in a list:")
+
         tm1 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
@@ -414,9 +411,9 @@ class LinkedBST(AbstractCollection):
         tm2 = time()
         print(tm2-tm1)
         print("")
-        
+
         tree_not_random_add = LinkedBST(lst_words)
-        print("Time searching in not balanced binary tree with sequentially added nodes:")
+        print("Time searching in a not balanced binary tree with sequentially added nodes:")
         tm3 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
@@ -427,7 +424,7 @@ class LinkedBST(AbstractCollection):
 
         shuffle(lst_words)
         tree_random_add = LinkedBST(lst_words)
-        print("Time searching in not balanced binary tree with randomly added nodes:")
+        print("Time searching in a not balanced binary tree with randomly added nodes:")
         tm5 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
@@ -437,7 +434,7 @@ class LinkedBST(AbstractCollection):
         print("")
 
         tree_random_add.rebalance()
-        print("Time searching in rebalance balanced binary tree:")
+        print("Time searching in a balanced binary tree:")
         tm7 = time()
         for i in tqdm.tqdm(range(ITERATIONS)):
             random_item = choice(lst_words)
@@ -448,7 +445,3 @@ class LinkedBST(AbstractCollection):
 
 
 LinkedBST.demo_bst("test.txt")
-# t = LinkedBST([i for i in "jkslg"])
-
-# print(t)
-# print(t.inorder())
